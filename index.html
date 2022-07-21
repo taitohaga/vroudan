@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='utf-8'>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>VR道路横断リプレイ</title>
+        <style>
+            .SideBar {
+                float: right;
+                width: 20%;
+            }
+
+            div.SideBar select {
+                width: 100%;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="SideBar">
+            <select name="games" id="gamelist" size="20">
+            </select>
+            <p>
+                年齢: <span id="age"></span><br>
+                車種: <span id="car_type"></span><br>
+                日付: <span id="date"></span><br>
+                終了時間: <span id="finsh_time"></span><br>
+                ゲームID: <span id="gameid"></span><br>
+                衝突物体: <span id="hit_object"></span><br>
+                衝突した時間: <span id="hit_time"></span><br>
+                免許の有無: <span id="license"></span><br>
+                プレイヤーID: <span id="playerid"></span><br>
+                走行パターン: <span id="run_pattern"></span><br>
+                性別: <span id="sex"></span><br>
+                ステージID: <span id="stageid"></span><br>
+                天気: <span id="whether"></span><br>
+            </p>
+        </div>
+        <div id="cvs"></div>
+        <div id="sqBar"></div>
+        <script async src="https://unpkg.com/es-module-shims@1.3.6/dist/es-module-shims.js"></script>
+        <script type="importmap">
+          {
+            "imports": {
+              "three": "https://unpkg.com/three@0.139.2/build/three.module.js"
+            }
+          }
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.6.2/sql-wasm.min.js"></script>
+        <script type="module" src="main.js"></script>
+    </body>
+</html>
