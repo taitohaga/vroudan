@@ -5,38 +5,128 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>VR道路横断リプレイ</title>
         <style>
+            .container {
+                display: flex;
+                flex-direction: row;
+                width: 100%;
+            }
             .SideBar {
-                float: right;
-                width: 20%;
+                width: 25%;
             }
 
             div.SideBar select {
                 width: 100%;
             }
+
+            .resetButton {
+                width: 100%;
+                padding: 0.5rem 0.5rem;
+                text-align: center;
+            }
+
+            .mainContent {
+                width: 78%;
+                height: 100vh;
+                position: sticky;
+                top: 0px;
+                right: 0px;
+            }
+
+            .agerange-row {
+                display: flex;
+                flex-direction: row;
+            }
+            .agerange-row :nth-child(1) {
+                flex-grow: 1;
+            }
+            .agerange-row :nth-child(2) {
+                flex-grow: 3;
+            }
+            .agerange-row :nth-child(3) {
+                flex-grow: 1;
+            }
+
+            .condition-table {
+                display: grid;
+                grid-template-columns: 40% 60%;
+            }
         </style>
     </head>
     <body>
-        <div class="SideBar">
-            <select name="games" id="gamelist" size="20">
-            </select>
-            <p>
-                年齢: <span id="age"></span><br>
-                車種: <span id="car_type"></span><br>
-                日付: <span id="date"></span><br>
-                終了時間: <span id="finsh_time"></span><br>
-                ゲームID: <span id="gameid"></span><br>
-                衝突物体: <span id="hit_object"></span><br>
-                衝突した時間: <span id="hit_time"></span><br>
-                免許の有無: <span id="license"></span><br>
-                プレイヤーID: <span id="playerid"></span><br>
-                走行パターン: <span id="run_pattern"></span><br>
-                性別: <span id="sex"></span><br>
-                ステージID: <span id="stageid"></span><br>
-                天気: <span id="whether"></span><br>
-            </p>
+        <div class="container">
+            <div class="SideBar">
+                <div class="condition-table">
+                    <div>
+                        <label for="hit-object">結果</label>
+                    </div>
+                    <div>
+                        <select name="hit-object" id="hit-object-selector">
+                            <option value="-1">すべて</option>
+                            <option value="0">時間切れ</option>
+                            <option value="1">成功</option>
+                            <option value="2">接触</option>
+                        </select>
+                    </div>
+                    <div><span>年齢</span></div>
+                    <div>
+                        <div class="agerange-row">
+                            <div style="display: block; width: 3em;"><label for="age-from-range">From</label></div>
+                            <input id="age-from-range" type="range" min="0" max="100" value=15 />
+                            <div style="display: block; width: 2em;"><span id="age-from">15</span></div>
+                        </div>
+                        <div class="agerange-row">
+                            <div style="display: block; width: 3em;"><label for="age-to-range">To</label></div>
+                            <input id="age-to-range" type="range" min="0" max="100" value=100 />
+                            <div style="display: block; width: 2em;"><span id="age-to">100</span></div>
+                        </div>
+                    </div>
+                    <div><label for="run-pattern-selector">走行パターン</label></div>
+                    <select name="run-pattern" id="run-pattern-selector">
+                        <option value="-1">すべて</option>
+                        <option value="1">40km/h</option>
+                        <option value="2">50km/h</option>
+                        <option value="3">60km/h</option>
+                        <option value="4">パターン1</option>
+                        <option value="5">パターン2</option>
+                        <option value="6">パターン3</option>
+                        <option value="7">Pattern 2-1</option>
+                        <option value="8">Pattern 2-2</option>
+                        <option value="9">Pattern 2-3</option>
+                        <option value="10">Pattern 3-1</option>
+                        <option value="11">Pattern 3-2</option>
+                        <option value="12">Pattern 3-3</option>
+                    </select>
+                    <div><label for="sex-selector">性別</label></div>
+                    <select name="sex" id="sex-selector">
+                        <option value="-1">すべて</option>
+                        <option value="1">男</option>
+                        <option value="2">女</option>
+                    </select>
+                </div>
+                <select name="games" id="gamelist" size="10">
+                </select>
+                <p>
+                    Game ID: <span id="gameid"></span><br>
+                    年齢: <span id="age"></span><br>
+                    車種: <span id="car_type"></span><br>
+                    日付: <span id="date"></span><br>
+                    終了時間: <span id="finsh_time"></span><br>
+                    ゲームID: <span id="gameid"></span><br>
+                    衝突物体: <span id="hit_object"></span><br>
+                    衝突した時間: <span id="hit_time"></span><br>
+                    免許の有無: <span id="license"></span><br>
+                    プレイヤーID: <span id="playerid"></span><br>
+                    走行パターン: <span id="run_pattern"></span><br>
+                    性別: <span id="sex"></span><br>
+                    ステージID: <span id="stageid"></span><br>
+                    天気: <span id="whether"></span><br>
+                </p>
+                <button id="resetButton" class="resetButton" disabled>最初から</button>
+            </div>
+            <div class="mainContent">
+                <div id="cvs"></div>
+            </div>
         </div>
-        <div id="cvs"></div>
-        <div id="sqBar"></div>
         <script async src="https://unpkg.com/es-module-shims@1.3.6/dist/es-module-shims.js"></script>
         <script type="importmap">
           {

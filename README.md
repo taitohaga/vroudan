@@ -1,5 +1,7 @@
 # 3D Visualization of VR Crosswalking Project
 
+Developed by Taito Haga at Shiga University.
+
 ## How to use
 
 
