@@ -414,7 +414,7 @@ class App {
 
     this.controls.screenSpacePanning = false;
 
-    this.controls.minDistance = 30;
+    this.controls.minDistance = 20;
     this.controls.maxDistance = 200;
 
     this.controls.maxPolarAngle = Math.PI / 2;
@@ -473,7 +473,7 @@ class App {
     }
 
     // age
-    query += ` age >= ${ageFrom} AND age <= ${ageTo}`;
+    query += ` age BETWEEN ${ageFrom} AND ${ageTo}`;
 
     query += ";";
     console.log(query)
