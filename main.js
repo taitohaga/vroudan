@@ -2,10 +2,12 @@ import * as THREE from 'three';
 import { OrbitControls } from 'https://unpkg.com/three@0.139.2/examples/jsm/controls/OrbitControls.js';
 
 let queryParams = {};
+let currentGameid;
 location.search.slice(1).split("&").map(keyval => keyval.split("=")).forEach(keyval => {
   const [key, val] = keyval;
   queryParams[key] = val;
 });
+
 
 const sexConvert = (sex) => {
   if (sex === 0) {
@@ -517,7 +519,8 @@ xhr.onload = function () {
   if (queryParams['gameid']) {
     console.log(queryParams['gameid']);
     resetButton.disabled = false;
-    window.app.onGameIDSelected(queryParams['gameid']);
+    currentGameid = queryParams['gameid'];
+    window.app.onGameIDSelected(currentGameid);
   }
 };
 xhr.send();
@@ -525,12 +528,13 @@ xhr.send();
 const resetButton = document.getElementById('resetButton');
 resetButton.addEventListener('click', event => {
   const gamelistBox = document.getElementById('gamelist');
-  window.app.onReset(gamelistBox.value);
+  window.app.onReset(currentGameid);
 });
 
 document.getElementById('gamelist').addEventListener('change', event => {
   resetButton.disabled = false;
-  window.app.onGameIDSelected(event.target.value);
+  currentGameid = event.target.value
+  window.app.onGameIDSelected(currentGameid);
 });
 
 const hitObjectSelector = document.getElementById('hit-object-selector');
