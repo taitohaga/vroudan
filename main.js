@@ -1,6 +1,12 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'https://unpkg.com/three@0.139.2/examples/jsm/controls/OrbitControls.js';
 
+let queryParams = {};
+location.search.slice(1).split("&").map(keyval => keyval.split("=")).forEach(keyval => {
+  const [key, val] = keyval;
+  queryParams[key] = val;
+});
+
 const sexConvert = (sex) => {
   if (sex === 0) {
     return "未回答";
@@ -508,6 +514,11 @@ xhr.onload = function () {
   const result = db.exec('SELECT gameid, age, sex, hit_object FROM games;');
   window.app.setGamelist(result);
   window.app.db = db;
+  if (queryParams['gameid']) {
+    console.log(queryParams['gameid']);
+    resetButton.disabled = false;
+    window.app.onGameIDSelected(queryParams['gameid']);
+  }
 };
 xhr.send();
 
